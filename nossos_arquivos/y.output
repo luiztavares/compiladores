@@ -1,0 +1,866 @@
+Gramática
+
+    0 $accept: S $end
+
+    1 S: E
+
+    2 E: E '+' E
+    3  | E '-' E
+    4  | E '*' E
+    5  | E '/' E
+    6  | E '<' E
+    7  | E '>' E
+    8  | E TK_MENOR_IGUAL E
+    9  | E TK_MAIOR_IGUAL E
+   10  | E TK_IGUAL E
+   11  | E TK_DIFERENTE E
+   12  | E TK_MOD E
+   13  | E TK_AND E
+   14  | E TK_OU E
+   15  | TK_NAO E
+   16  | OPERANDO
+
+   17 OPERANDO: TK_ID
+   18         | TK_INT
+   19         | TK_DEC
+   20         | '(' E ')'
+   21         | TK_ID '(' E ')'
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'(' (40) 20 21
+')' (41) 20 21
+'*' (42) 4
+'+' (43) 2
+'-' (45) 3
+'/' (47) 5
+'<' (60) 6
+'>' (62) 7
+error (256)
+TK_ID (258) 17 21
+TK_INT (259) 18
+TK_DEC (260) 19
+TK_MAIOR_IGUAL (261) 9
+TK_MENOR_IGUAL (262) 8
+TK_IGUAL (263) 10
+TK_DIFERENTE (264) 11
+TK_AND (265) 13
+TK_OU (266) 14
+TK_NAO (267) 15
+TK_MOD (268) 12
+
+
+Não-terminais com as regras onde eles aparecem
+
+$accept (22)
+    à esquerda: 0
+S (23)
+    à esquerda: 1, à direita: 0
+E (24)
+    à esquerda: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16, à direita:
+    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 20 21
+OPERANDO (25)
+    à esquerda: 17 18 19 20 21, à direita: 16
+
+
+State 0
+
+    0 $accept: . S $end
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    S         ir ao estado 6
+    E         ir ao estado 7
+    OPERANDO  ir ao estado 8
+
+
+State 1
+
+   17 OPERANDO: TK_ID .
+   21         | TK_ID . '(' E ')'
+
+    '('  deslocar, e ir ao estado 9
+
+    $padrão  reduzir usando a regra 17 (OPERANDO)
+
+
+State 2
+
+   18 OPERANDO: TK_INT .
+
+    $padrão  reduzir usando a regra 18 (OPERANDO)
+
+
+State 3
+
+   19 OPERANDO: TK_DEC .
+
+    $padrão  reduzir usando a regra 19 (OPERANDO)
+
+
+State 4
+
+   15 E: TK_NAO . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 10
+    OPERANDO  ir ao estado 8
+
+
+State 5
+
+   20 OPERANDO: '(' . E ')'
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 11
+    OPERANDO  ir ao estado 8
+
+
+State 6
+
+    0 $accept: S . $end
+
+    $end  deslocar, e ir ao estado 12
+
+
+State 7
+
+    1 S: E .
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MAIOR_IGUAL  deslocar, e ir ao estado 13
+    TK_MENOR_IGUAL  deslocar, e ir ao estado 14
+    TK_IGUAL        deslocar, e ir ao estado 15
+    TK_DIFERENTE    deslocar, e ir ao estado 16
+    TK_AND          deslocar, e ir ao estado 17
+    TK_OU           deslocar, e ir ao estado 18
+    TK_MOD          deslocar, e ir ao estado 19
+    '>'             deslocar, e ir ao estado 20
+    '<'             deslocar, e ir ao estado 21
+    '+'             deslocar, e ir ao estado 22
+    '-'             deslocar, e ir ao estado 23
+    '*'             deslocar, e ir ao estado 24
+    '/'             deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 1 (S)
+
+
+State 8
+
+   16 E: OPERANDO .
+
+    $padrão  reduzir usando a regra 16 (E)
+
+
+State 9
+
+   21 OPERANDO: TK_ID '(' . E ')'
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 26
+    OPERANDO  ir ao estado 8
+
+
+State 10
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+   15  | TK_NAO E .
+
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 15 (E)
+
+
+State 11
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+   20 OPERANDO: '(' E . ')'
+
+    TK_MAIOR_IGUAL  deslocar, e ir ao estado 13
+    TK_MENOR_IGUAL  deslocar, e ir ao estado 14
+    TK_IGUAL        deslocar, e ir ao estado 15
+    TK_DIFERENTE    deslocar, e ir ao estado 16
+    TK_AND          deslocar, e ir ao estado 17
+    TK_OU           deslocar, e ir ao estado 18
+    TK_MOD          deslocar, e ir ao estado 19
+    '>'             deslocar, e ir ao estado 20
+    '<'             deslocar, e ir ao estado 21
+    '+'             deslocar, e ir ao estado 22
+    '-'             deslocar, e ir ao estado 23
+    '*'             deslocar, e ir ao estado 24
+    '/'             deslocar, e ir ao estado 25
+    ')'             deslocar, e ir ao estado 27
+
+
+State 12
+
+    0 $accept: S $end .
+
+    $padrão  aceitar
+
+
+State 13
+
+    9 E: E TK_MAIOR_IGUAL . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 28
+    OPERANDO  ir ao estado 8
+
+
+State 14
+
+    8 E: E TK_MENOR_IGUAL . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 29
+    OPERANDO  ir ao estado 8
+
+
+State 15
+
+   10 E: E TK_IGUAL . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 30
+    OPERANDO  ir ao estado 8
+
+
+State 16
+
+   11 E: E TK_DIFERENTE . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 31
+    OPERANDO  ir ao estado 8
+
+
+State 17
+
+   13 E: E TK_AND . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 32
+    OPERANDO  ir ao estado 8
+
+
+State 18
+
+   14 E: E TK_OU . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 33
+    OPERANDO  ir ao estado 8
+
+
+State 19
+
+   12 E: E TK_MOD . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 34
+    OPERANDO  ir ao estado 8
+
+
+State 20
+
+    7 E: E '>' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 35
+    OPERANDO  ir ao estado 8
+
+
+State 21
+
+    6 E: E '<' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 36
+    OPERANDO  ir ao estado 8
+
+
+State 22
+
+    2 E: E '+' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 37
+    OPERANDO  ir ao estado 8
+
+
+State 23
+
+    3 E: E '-' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 38
+    OPERANDO  ir ao estado 8
+
+
+State 24
+
+    4 E: E '*' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 39
+    OPERANDO  ir ao estado 8
+
+
+State 25
+
+    5 E: E '/' . E
+
+    TK_ID   deslocar, e ir ao estado 1
+    TK_INT  deslocar, e ir ao estado 2
+    TK_DEC  deslocar, e ir ao estado 3
+    TK_NAO  deslocar, e ir ao estado 4
+    '('     deslocar, e ir ao estado 5
+
+    E         ir ao estado 40
+    OPERANDO  ir ao estado 8
+
+
+State 26
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+   21 OPERANDO: TK_ID '(' E . ')'
+
+    TK_MAIOR_IGUAL  deslocar, e ir ao estado 13
+    TK_MENOR_IGUAL  deslocar, e ir ao estado 14
+    TK_IGUAL        deslocar, e ir ao estado 15
+    TK_DIFERENTE    deslocar, e ir ao estado 16
+    TK_AND          deslocar, e ir ao estado 17
+    TK_OU           deslocar, e ir ao estado 18
+    TK_MOD          deslocar, e ir ao estado 19
+    '>'             deslocar, e ir ao estado 20
+    '<'             deslocar, e ir ao estado 21
+    '+'             deslocar, e ir ao estado 22
+    '-'             deslocar, e ir ao estado 23
+    '*'             deslocar, e ir ao estado 24
+    '/'             deslocar, e ir ao estado 25
+    ')'             deslocar, e ir ao estado 41
+
+
+State 27
+
+   20 OPERANDO: '(' E ')' .
+
+    $padrão  reduzir usando a regra 20 (OPERANDO)
+
+
+State 28
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+    9  | E TK_MAIOR_IGUAL E .
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 9 (E)
+
+
+State 29
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    8  | E TK_MENOR_IGUAL E .
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 8 (E)
+
+
+State 30
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   10  | E TK_IGUAL E .
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 10 (E)
+
+
+State 31
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   11  | E TK_DIFERENTE E .
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 11 (E)
+
+
+State 32
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   13  | E TK_AND E .
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 13 (E)
+
+
+State 33
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+   14  | E TK_OU E .
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 14 (E)
+
+
+State 34
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   12  | E TK_MOD E .
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+
+    $padrão  reduzir usando a regra 12 (E)
+
+
+State 35
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    7  | E '>' E .
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 7 (E)
+
+
+State 36
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    6  | E '<' E .
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_AND  deslocar, e ir ao estado 17
+    TK_OU   deslocar, e ir ao estado 18
+    TK_MOD  deslocar, e ir ao estado 19
+    '+'     deslocar, e ir ao estado 22
+    '-'     deslocar, e ir ao estado 23
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    TK_MAIOR_IGUAL  erro (não associativo)
+    TK_MENOR_IGUAL  erro (não associativo)
+    TK_IGUAL        erro (não associativo)
+    TK_DIFERENTE    erro (não associativo)
+    '>'             erro (não associativo)
+    '<'             erro (não associativo)
+
+    $padrão  reduzir usando a regra 6 (E)
+
+
+State 37
+
+    2 E: E . '+' E
+    2  | E '+' E .
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 2 (E)
+
+
+State 38
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    3  | E '-' E .
+    4  | E . '*' E
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+    '*'     deslocar, e ir ao estado 24
+    '/'     deslocar, e ir ao estado 25
+
+    $padrão  reduzir usando a regra 3 (E)
+
+
+State 39
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    4  | E '*' E .
+    5  | E . '/' E
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+
+    $padrão  reduzir usando a regra 4 (E)
+
+
+State 40
+
+    2 E: E . '+' E
+    3  | E . '-' E
+    4  | E . '*' E
+    5  | E . '/' E
+    5  | E '/' E .
+    6  | E . '<' E
+    7  | E . '>' E
+    8  | E . TK_MENOR_IGUAL E
+    9  | E . TK_MAIOR_IGUAL E
+   10  | E . TK_IGUAL E
+   11  | E . TK_DIFERENTE E
+   12  | E . TK_MOD E
+   13  | E . TK_AND E
+   14  | E . TK_OU E
+
+    TK_MOD  deslocar, e ir ao estado 19
+
+    $padrão  reduzir usando a regra 5 (E)
+
+
+State 41
+
+   21 OPERANDO: TK_ID '(' E ')' .
+
+    $padrão  reduzir usando a regra 21 (OPERANDO)
