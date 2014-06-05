@@ -36,13 +36,23 @@ ko		    { return TK_KO; }
 repita		{ return TK_REPITA; }
 ate		    { return TK_ATE; }
 
+leia		{ return TK_IN; }
+escreva		{ return TK_OUT; }
 
+varglob   { return TK_VARIAVEIS_GLOBAIS; }
+bolgrav   { return TK_FIM_VARIAVEIS_GLOBAIS; }
+
+retorne		  { return TK_RETURN; }
+
+"ok computer" { return TK_MAIN; }
+"ko computer" { return TK_END_MAIN; }
 
 inteiro   { return TK_TIPO_INT; }
 decimal   { return TK_TIPO_DEC; }
 bool	  { return TK_TIPO_BOOL; }
 caractere { return TK_TIPO_CHAR; }
 texto     { return TK_TIPO_TEXTO; }
+vazio		{return TK_TIPO_VAZIO; }
 
 mod       { return TK_MOD; }
 

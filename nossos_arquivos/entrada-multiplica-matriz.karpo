@@ -1,0 +1,43 @@
+< 10,10 >decimal multiplicaMatriz( <10,10>decimal matrizEsquerda, <10,10>decimal matrizDireita )
+
+ok
+	< 10,10 >decimal resultado;
+	
+	para i em [0 : 10[ incremente 1 :
+	
+		para j em [0 : 10[ incremente 1 :
+		
+		ok
+			resultado[i,j] = 0;
+			
+			para k em [0 : 10[ incremente 1 :
+				resultado[i,j] = resultado[i,j] + matrizEsquerda[i,k] * matrizDireita[k,j];
+		
+		ko		
+	
+ko
+
+< 10,10 >decimal leiaMatriz10por10()
+ok
+	< 10,10 >decimal matriz;
+	para i em [0 : 10[ incremente 1 :
+		para j em [0 : 10[ incremente 1 :
+			matriz[i,j] = leia();
+			
+	retorne matriz;		
+ko
+
+ok computer()
+
+	< 10,10 >decimal a;
+	< 10,10 >decimal b;
+	
+	a = leiaMatriz10por10();
+	b = leiaMatriz10por10();
+
+	multiplicaMatriz(a,b);
+	
+	
+
+ko computer
+

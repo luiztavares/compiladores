@@ -1,5 +1,5 @@
 all: trabalho entrada.cc
-	./trabalho < entrada-multiplica-matriz.karpo
+	./trabalho < entrada-primo.karpo
 
 lex.yy.c: trabalho.l
 	lex trabalho.l

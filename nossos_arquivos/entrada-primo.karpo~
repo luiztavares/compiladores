@@ -1,0 +1,30 @@
+bool ePrimo(inteiro numeroTeste)
+
+ok
+	inteiro iterando = 2;
+	enquanto ( numeroTeste mod(iterando) diferente 0) :
+	
+	ok
+		iterando = iterando + 1;
+	ko
+	
+	se iterando igual numeroTeste entao
+			retorne verdadeiro;
+	
+	retorne falso;
+ko			
+
+
+ok computer()
+
+
+	inteiro numeroTeste = leia();
+		
+	para iterandoPrimo em [2:numeroTeste] incremente 1 :
+		se ( ePrimo(iterandoPrimo) ) entao
+			escreva(iterandoPrimo);			
+
+
+ko computer;
+
+
