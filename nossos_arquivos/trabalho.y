@@ -72,8 +72,8 @@ E : E '+' E
   ;
   
 OPERANDO : TK_ID
-		 | TK_ID '[' E ']'
-		 | TK_ID '[' E ',' E ']'
+		 | TK_ID  '{' E '}'
+		 | TK_ID  '{' E ',' E '}'
 		 | TK_INT
 		 | TK_DEC
 		 | TK_BOOL
@@ -119,20 +119,13 @@ INIT : ATRIBUICAO
 	 ;
 
 ATRIBUICAO : '=' VALOR
-<<<<<<< HEAD
-		   |'[' E ']' '=' VALOR
-		   |'[' E ',' E ']' '=' VALOR
-=======
->>>>>>> e81878b8aa45e9ed93203a220a926d73315758f3
+		   |'{' E '}' '=' VALOR
+		   |'{' E ',' E '}' '=' VALOR
 		   ;
 		   
 VALOR : CONST_BASICA
 	  | CONST_VETOR
-<<<<<<< HEAD
-	  | CONST_MATRIX
-=======
 	  | CONST_MATRIX;
->>>>>>> e81878b8aa45e9ed93203a220a926d73315758f3
 	  ;
 	  
 CONST_VETOR : '{' LISTA_CONST '}'
@@ -206,11 +199,8 @@ COMANDO_ATRIBUICAO : TK_ID ATRIBUICAO ';'
 COMANDO_VAZIO : ';'
 			  ;
 			  
-<<<<<<< HEAD
+
 COMANDO_RETURN : TK_RETURN E ';'
-=======
-COMANDO_RETURN : TK_RETURN ';'
->>>>>>> e81878b8aa45e9ed93203a220a926d73315758f3
 			   ;			  
 			  
 BLOCO : TK_OK LISTA_DECLARACAO LISTA_COMANDO TK_KO

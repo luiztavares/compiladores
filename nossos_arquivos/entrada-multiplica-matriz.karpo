@@ -8,10 +8,10 @@ ok
 		para j em [0 : 10[ incremente 1 :
 		
 		ok
-			resultado[i,j] = 0;
+			resultado{i,j} = 0;
 			
 			para k em [0 : 10[ incremente 1 :
-				resultado[i,j] = resultado[i,j] + matrizEsquerda[i,k] * matrizDireita[k,j];
+				resultado{i,j} = resultado{i,j} + matrizEsquerda{i,k} * matrizDireita{k,j};
 		
 		ko		
 	
@@ -22,7 +22,7 @@ ok
 	< 10,10 >decimal matriz;
 	para i em [0 : 10[ incremente 1 :
 		para j em [0 : 10[ incremente 1 :
-			matriz[i,j] = leia();
+			matriz{i,j} = leia();
 			
 	retorne matriz;		
 ko
